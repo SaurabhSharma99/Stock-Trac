@@ -2,6 +2,10 @@ from flask import Flask,render_template,request
 from flask_sqlalchemy import SQLAlchemy
 import json
 import requests
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from alpha_vantage.timeseries import TimeSeries
 from datetime import datetime
 
 authent_key="013EI0MDSY4HVSIJ"
@@ -74,6 +78,17 @@ def blog():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
+#Plot test in python
+@app.route("/test")
+def chartText():
+    arr = []
+    for i in range(5):
+        arr.append(float(list_of_dict[i]['Global Quote']['02. open']))
+    plt.plot(arr)
+    plt.title('Plot of five companies with opening price')
+    plt.savefig('static/images/new_plot.png')
+    return render_template('plot.html', name = 'Sample Plot', url = 'static/images/new_plot.png')
 
 # sno,name,email,mobileno,message
 
